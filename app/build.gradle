@@ -1,0 +1,97 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    defaultConfig {
+        applicationId "com.roberto.pokedex"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // applicationIdSuffix ".debug"
+        }
+        release {
+            minifyEnabled false
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "roberto"
+
+    productFlavors {
+        mock {
+            applicationIdSuffix = ".mock"
+            dimension "roberto"
+        }
+        prod {
+            dimension "roberto"
+        }
+    }
+    android.variantFilter { variant ->
+        if (variant.buildType.name.equals('release')
+                && variant.getFlavors().get(0).name.equals('mock')) {
+            variant.setIgnore(true);
+        }
+    }
+    testOptions {
+
+        unitTests.all {
+            testLogging {
+                events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+            }
+        }
+
+        unitTests.returnDefaultValues = true
+    }
+    dataBinding {
+        enabled = true
+    }
+    lintOptions {
+        // set to true to turn off analysis progress reporting by lint
+        quiet true
+        // if true, stop the gradle build if errors are found
+        abortOnError true
+        ignoreWarnings true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+dependencies {
+
+    //Test.
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    annotationProcessor("com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-compat:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-fragment:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-core-utils:$rootProject.supportLibraryVersion"
+
+    //Third party libs.
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.converterGson"
+    implementation "com.google.code.gson:gson:$rootProject.gson"
+    implementation "com.squareup.picasso:picasso:$rootProject.picasso"
+}

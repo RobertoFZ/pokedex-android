@@ -1,0 +1,59 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+// Define versions in a single place
+ext {
+    // Sdk and tools
+    minSdkVersion = 21
+    targetSdkVersion = 26
+    compileSdkVersion = 26
+    buildToolsVersion = '27.0.3'
+
+    // Versions
+    applicationId = "mx.com.roberto.pokedex"
+    versionCode = 1
+    versionName = "1.0.0"
+
+    //External SDKs
+    okhttp = '3.4.1'
+    retrofit = '2.0.0'
+    gson = '2.6.1'
+    converterGson = '2.0.0'
+    picasso = '2.5.2'
+    PlayServices = '10.2.0'
+
+    // App dependencies
+    supportLibraryVersion = '27.1.1'
+    junitVersion = '4.12'
+    espressoVersion = '2.2.2'
+}
+
