@@ -3,22 +3,33 @@ package com.roberto.pokedex.data.interactor;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import java.util.Objects;
+
 /**
  * Created by robertofz on 6/26/18.
  */
 
 public class LoginInteractor {
 
-    public interface OnLoginFinishedListener {
-        void onEmailError();
+    private static final String EMAIL = "test@gmail.com";
+    private static final String PASSWORD = "testemail";
 
-        void onPasswordError();
+    public interface OnLoginFinishedListener {
+
+        void onCredentialsError();
 
         void onSuccess();
     }
 
     public void login(final String email, final String password, final OnLoginFinishedListener listener) {
-        // TODO: IMPLEMENT DUMMY LOGIN WHIT STATIC DATA
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                if(!Objects.equals(email, EMAIL) || !Objects.equals(password, PASSWORD)){
+                    listener.onCredentialsError();
+                }
+                listener.onSuccess();
+            }
+        }, 2000);
     }
 
 }

@@ -1,5 +1,7 @@
 package com.roberto.pokedex.presentation.Login;
 
+import android.text.TextUtils;
+
 import com.roberto.pokedex.data.interactor.LoginInteractor;
 
 /**
@@ -19,8 +21,12 @@ public class LoginPresenter implements LoginContract.UserActions, LoginInteracto
     public void validateCredentials(String email, String password) {
         if (loginView != null) {
             loginView.showProgress();
+            loginView.hideLoginButton();
+            loginView.hideCredentialsError();
         }
-        loginInteractor.login(email, password, this);
+        if(!isEmptyCredentials(email, password)){
+            loginInteractor.login(email, password, this);
+        }
     }
 
     @Override
@@ -29,19 +35,10 @@ public class LoginPresenter implements LoginContract.UserActions, LoginInteracto
     }
 
     @Override
-    public void onEmailError() {
-        if (loginView != null) {
-            loginView.setEmailError();
-            loginView.hideProgress();
-        }
-    }
-
-    @Override
-    public void onPasswordError() {
-        if (loginView != null) {
-            loginView.setPasswordError();
-            loginView.hideProgress();
-        }
+    public void onCredentialsError() {
+        loginView.hideProgress();
+        loginView.showLoginButton();
+        loginView.showCredentialsError();
     }
 
     @Override
@@ -49,5 +46,21 @@ public class LoginPresenter implements LoginContract.UserActions, LoginInteracto
         if (loginView != null) {
             loginView.navigateToHome();
         }
+    }
+
+    private boolean isEmptyCredentials(String email, String password){
+        if (TextUtils.isEmpty(email)) {
+            loginView.setEmailError();
+            loginView.hideProgress();
+            loginView.showLoginButton();
+            return true;
+        }
+        if (TextUtils.isEmpty(password)) {
+            loginView.setPasswordError();
+            loginView.hideProgress();
+            loginView.showLoginButton();
+            return true;
+        }
+        return false;
     }
 }

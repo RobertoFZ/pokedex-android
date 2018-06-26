@@ -8,8 +8,12 @@ public interface LoginContract {
     interface View {
         void showProgress();
         void hideProgress();
+        void showLoginButton();
+        void hideLoginButton();
         void setEmailError();
         void setPasswordError();
+        void showCredentialsError();
+        void hideCredentialsError();
         void navigateToHome();
     }
 
