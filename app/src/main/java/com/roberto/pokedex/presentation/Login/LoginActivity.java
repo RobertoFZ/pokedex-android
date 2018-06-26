@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.roberto.pokedex.R;
+import com.roberto.pokedex.data.UserSessionManager;
 import com.roberto.pokedex.data.interactor.LoginInteractor;
 
 /**
@@ -34,7 +35,7 @@ public class LoginActivity extends Activity implements LoginContract.View{
         passwordTextView = findViewById(R.id.password);
         loginButton = findViewById(R.id.login_button);
 
-        presenter = new LoginPresenter(this, new LoginInteractor());
+        presenter = new LoginPresenter(this, new LoginInteractor(), new UserSessionManager(this));
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

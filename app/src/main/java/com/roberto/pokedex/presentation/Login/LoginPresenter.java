@@ -2,7 +2,9 @@ package com.roberto.pokedex.presentation.Login;
 
 import android.text.TextUtils;
 
+import com.roberto.pokedex.data.UserSessionManager;
 import com.roberto.pokedex.data.interactor.LoginInteractor;
+import com.roberto.pokedex.domain.User;
 
 /**
  * Created by robertofz on 6/26/18.
@@ -11,10 +13,12 @@ import com.roberto.pokedex.data.interactor.LoginInteractor;
 public class LoginPresenter implements LoginContract.UserActions, LoginInteractor.OnLoginFinishedListener{
     private LoginContract.View loginView;
     private LoginInteractor loginInteractor;
+    private UserSessionManager userSessionManager;
 
-    public LoginPresenter(LoginContract.View loginView, LoginInteractor loginInteractor) {
+    public LoginPresenter(LoginContract.View loginView, LoginInteractor loginInteractor, UserSessionManager userSessionManager) {
         this.loginView = loginView;
         this.loginInteractor = loginInteractor;
+        this.userSessionManager = userSessionManager;
     }
 
     @Override
@@ -42,9 +46,14 @@ public class LoginPresenter implements LoginContract.UserActions, LoginInteracto
     }
 
     @Override
-    public void onSuccess() {
+    public void onSuccess(User user) {
         if (loginView != null) {
-            loginView.navigateToHome();
+            try {
+                userSessionManager.registerUser(user);
+                loginView.navigateToHome();
+            } catch (UserSessionManager.NullUserSession nullUserSession) {
+                nullUserSession.printStackTrace();
+            }
         }
     }
 

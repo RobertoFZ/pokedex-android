@@ -3,6 +3,8 @@ package com.roberto.pokedex.data.interactor;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import com.roberto.pokedex.domain.User;
+
 import java.util.Objects;
 
 /**
@@ -18,7 +20,7 @@ public class LoginInteractor {
 
         void onCredentialsError();
 
-        void onSuccess();
+        void onSuccess(User user);
     }
 
     public void login(final String email, final String password, final OnLoginFinishedListener listener) {
@@ -27,7 +29,11 @@ public class LoginInteractor {
                 if(!Objects.equals(email, EMAIL) || !Objects.equals(password, PASSWORD)){
                     listener.onCredentialsError();
                 }
-                listener.onSuccess();
+                User user = new User();
+                user.setEmail(EMAIL);
+                user.setFirstName("Test");
+                user.setLastName("User");
+                listener.onSuccess(user);
             }
         }, 2000);
     }
