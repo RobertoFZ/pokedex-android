@@ -9,4 +9,13 @@
     <string name="credentials_error">Wrong email or password</string>
     <string name="login">Log in</string>
     <!-- login screen end -->
+
+    <!-- home screen start -->
+    <string name="logout_confirm">Are you sure you want to log out?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="connection_error">Network error</string>
+    <string name="try_again">Try again</string>
+    <string name="loading_more">Loading more pokemons...</string>
+    <!-- home screen end -->
 </resources>

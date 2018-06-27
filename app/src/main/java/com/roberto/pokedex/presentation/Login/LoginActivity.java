@@ -1,6 +1,7 @@
 package com.roberto.pokedex.presentation.Login;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +11,8 @@ import android.widget.TextView;
 
 import com.roberto.pokedex.R;
 import com.roberto.pokedex.data.UserSessionManager;
-import com.roberto.pokedex.data.interactor.LoginInteractor;
+import com.roberto.pokedex.common.iteractor.LoginIteractor;
+import com.roberto.pokedex.presentation.Home.HomeActivity;
 
 /**
  * Created by robertofz on 6/26/18.
@@ -35,7 +37,7 @@ public class LoginActivity extends Activity implements LoginContract.View{
         passwordTextView = findViewById(R.id.password);
         loginButton = findViewById(R.id.login_button);
 
-        presenter = new LoginPresenter(this, new LoginInteractor(), new UserSessionManager(this));
+        presenter = new LoginPresenter(this, new LoginIteractor(), new UserSessionManager(this));
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,5 +91,8 @@ public class LoginActivity extends Activity implements LoginContract.View{
     @Override
     public void navigateToHome() {
         // TODO: LAUNCH HOME ACTIVITY
+        Intent homActivity = new Intent(this, HomeActivity.class);
+        startActivity(homActivity);
+        finish();
     }
 }

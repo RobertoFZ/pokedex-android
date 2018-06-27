@@ -3,21 +3,21 @@ package com.roberto.pokedex.presentation.Login;
 import android.text.TextUtils;
 
 import com.roberto.pokedex.data.UserSessionManager;
-import com.roberto.pokedex.data.interactor.LoginInteractor;
+import com.roberto.pokedex.common.iteractor.LoginIteractor;
 import com.roberto.pokedex.domain.User;
 
 /**
  * Created by robertofz on 6/26/18.
  */
 
-public class LoginPresenter implements LoginContract.UserActions, LoginInteractor.OnLoginFinishedListener{
+public class LoginPresenter implements LoginContract.UserActions, LoginIteractor.OnLoginFinishedListener{
     private LoginContract.View loginView;
-    private LoginInteractor loginInteractor;
+    private LoginIteractor loginIteractor;
     private UserSessionManager userSessionManager;
 
-    public LoginPresenter(LoginContract.View loginView, LoginInteractor loginInteractor, UserSessionManager userSessionManager) {
+    public LoginPresenter(LoginContract.View loginView, LoginIteractor loginIteractor, UserSessionManager userSessionManager) {
         this.loginView = loginView;
-        this.loginInteractor = loginInteractor;
+        this.loginIteractor = loginIteractor;
         this.userSessionManager = userSessionManager;
     }
 
@@ -29,7 +29,7 @@ public class LoginPresenter implements LoginContract.UserActions, LoginInteracto
             loginView.hideCredentialsError();
         }
         if(!isEmptyCredentials(email, password)){
-            loginInteractor.login(email, password, this);
+            loginIteractor.login(email, password, this);
         }
     }
 

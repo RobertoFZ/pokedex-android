@@ -90,6 +90,7 @@ dependencies {
 
     //Third party libs.
     implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.logginInterceptor"
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.converterGson"
     implementation "com.google.code.gson:gson:$rootProject.gson"

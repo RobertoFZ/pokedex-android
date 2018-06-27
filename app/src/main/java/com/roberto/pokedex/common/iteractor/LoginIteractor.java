@@ -1,7 +1,6 @@
-package com.roberto.pokedex.data.interactor;
+package com.roberto.pokedex.common.iteractor;
 
 import android.os.Handler;
-import android.text.TextUtils;
 
 import com.roberto.pokedex.domain.User;
 
@@ -11,7 +10,7 @@ import java.util.Objects;
  * Created by robertofz on 6/26/18.
  */
 
-public class LoginInteractor {
+public class LoginIteractor {
 
     private static final String EMAIL = "test@gmail.com";
     private static final String PASSWORD = "testemail";
