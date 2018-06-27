@@ -1,6 +1,5 @@
 package com.roberto.pokedex.data;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.roberto.pokedex.domain.Pokemon;
@@ -21,6 +20,7 @@ public class PokemonManager {
 
     private static PokemonManager instance;
     private HashMap<Integer, Pokemon> pokemons;
+    private int count;
     private int offset;
     private int previous;
 
@@ -38,35 +38,36 @@ public class PokemonManager {
         return instance;
     }
 
-    public void addPokemon(Pokemon pokemon) {
-        pokemons.put(pokemon.id, pokemon);
-    }
-
-    public Pokemon getPokemon(int pokemonId) {
-        return pokemons.get(pokemonId);
-    }
-
-    public int getPrevious(){
-        return previous;
+    public int getCount() {
+        return count;
     }
 
     public int getOffset() {
         return offset;
     }
 
-    public void updatePokemonsList(PokemonPage pokemonPage){
-        String previousUrl = pokemonPage.previous;
-        String nextUrl = pokemonPage.next;
+    public Pokemon getPokemon(int pokemonId) {
+        return pokemons.get(pokemonId);
+    }
+
+    public int getPrevious() {
+        return previous;
+    }
+
+    public void updatePokemonsList(PokemonPage pokemonPage) {
+        count = pokemonPage.getCount();
+        String previousUrl = pokemonPage.getPrevious();
+        String nextUrl = pokemonPage.getNext();
 
         updateNextPage(nextUrl);
         updatePreviousPage(previousUrl);
 
-        List<Pokemon> pokemonList = pokemonPage.results;
+        List<Pokemon> pokemonList = pokemonPage.getList();
 
         for (Pokemon pokemon : pokemonList) {
             String url = pokemon.getUrl();
             Matcher matcher = pokemonIdPattern.matcher(url);
-            if(matcher.find()){
+            if (matcher.find()) {
                 pokemon.setId(Integer.parseInt(matcher.group(1)));
                 pokemons.put(pokemon.getId(), pokemon);
             }
@@ -77,23 +78,22 @@ public class PokemonManager {
         return pokemons;
     }
 
-    private void updatePreviousPage(String previousUrl){
-        if(previousUrl != null){
+    private void updatePreviousPage(String previousUrl) {
+        if (previousUrl != null) {
             Matcher matcher = offsetPattern.matcher(previousUrl);
-            if(matcher.find()){
+            if (matcher.find()) {
                 previous = Integer.parseInt(matcher.group(1));
             }
         }
     }
 
-    private void updateNextPage(String nextUrl){
-        Matcher matcher = offsetPattern.matcher(nextUrl);
-        if(matcher.find()){
-            previous = offset;
-            offset = Integer.parseInt(matcher.group(1));
-        }else{
-            offset = 0;
-            previous = 0;
+    private void updateNextPage(String nextUrl) {
+        if (nextUrl != null) {
+            Matcher matcher = offsetPattern.matcher(nextUrl);
+            if (matcher.find()) {
+                previous = offset;
+                offset = Integer.parseInt(matcher.group(1));
+            }
         }
     }
 }

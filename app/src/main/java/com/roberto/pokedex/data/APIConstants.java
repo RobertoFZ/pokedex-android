@@ -6,6 +6,9 @@ package com.roberto.pokedex.data;
 
 public class APIConstants {
     public static final String API_BASE_URL = "https://pokeapi.co/api/v2/";
+    public static final int LIST_LIMIT = 50;
+    public static final String USER_EMAIL = "test@gmail.com";
+    public static final String PASSWORD = "password";
 
     public static final String ID = "id";
     public static final String COUNT = "count";

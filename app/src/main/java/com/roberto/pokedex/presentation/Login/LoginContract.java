@@ -7,18 +7,17 @@ package com.roberto.pokedex.presentation.Login;
 public interface LoginContract {
     interface View {
         void showProgress();
-        void hideProgress();
         void showLoginButton();
-        void hideLoginButton();
-        void setEmailError();
-        void setPasswordError();
         void showCredentialsError();
         void hideCredentialsError();
+        void hideProgress();
+        void hideLoginButton();
         void navigateToHome();
+        void setEmailError();
+        void setPasswordError();
     }
 
     interface UserActions {
         void validateCredentials(String email, String password);
-        void onDestroy();
     }
 }

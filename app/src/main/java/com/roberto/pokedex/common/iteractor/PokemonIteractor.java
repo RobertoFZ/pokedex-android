@@ -5,12 +5,8 @@ import android.util.Log;
 import com.roberto.pokedex.common.network.APIClient;
 import com.roberto.pokedex.common.network.PokemonService;
 import com.roberto.pokedex.common.network.SingleItemCallback;
-import com.roberto.pokedex.data.PokemonManager;
 import com.roberto.pokedex.domain.Pokemon;
 import com.roberto.pokedex.domain.PokemonPage;
-
-import java.util.List;
-import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -31,11 +32,11 @@ public class LoginActivity extends Activity implements LoginContract.View{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        credentialsErrorTextView = findViewById(R.id.credentials_error);
-        progressBar = findViewById(R.id.progress);
-        emailTextView = findViewById(R.id.email);
-        passwordTextView = findViewById(R.id.password);
-        loginButton = findViewById(R.id.login_button);
+        credentialsErrorTextView = (TextView) findViewById(R.id.credentials_error);
+        progressBar = (ProgressBar) findViewById(R.id.progress);
+        emailTextView = (EditText) findViewById(R.id.email);
+        passwordTextView = (EditText) findViewById(R.id.password);
+        loginButton = (Button) findViewById(R.id.login_button);
 
         presenter = new LoginPresenter(this, new LoginIteractor(), new UserSessionManager(this));
         loginButton.setOnClickListener(new View.OnClickListener() {

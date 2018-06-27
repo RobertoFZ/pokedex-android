@@ -11,43 +11,17 @@
         android:layout_height="75dp"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/user_name"
-            android:text="Nombre"
-            android:textSize="22sp"
-            android:layout_marginTop="16sp"
-            android:layout_marginBottom="16sp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <include  layout="@layout/home_header"/>
 
-        <LinearLayout
-            android:id="@+id/error_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/connection_error"
-                android:textSize="24sp" />
-
-            <Button
-                android:id="@+id/try_again_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/try_again" />
-        </LinearLayout>
+        <include  layout="@layout/network_error"/>
 
         <ListView
             android:id="@+id/pokemon_list"
@@ -56,23 +30,7 @@
             android:background="@android:color/transparent"/>
     </LinearLayout>
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floating_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_exit_to_app"
-            android:tint="@android:color/white" />
-
-    </android.support.design.widget.CoordinatorLayout>
+    <include  layout="@layout/floating_button"/>
 
 </RelativeLayout>
 

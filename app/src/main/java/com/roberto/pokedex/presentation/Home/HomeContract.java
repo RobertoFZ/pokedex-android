@@ -3,7 +3,6 @@ package com.roberto.pokedex.presentation.Home;
 import com.roberto.pokedex.domain.Pokemon;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by robertofz on 6/26/18.
@@ -11,19 +10,17 @@ import java.util.List;
 
 public class HomeContract {
     interface View {
-        void sendToLogin();
-        void updatePokemonList(HashMap<Integer, Pokemon> pokemonList);
-        void showError();
         void hideError();
+        void hideProgress();
+        void sendToLogin();
+        void showError();
         void showLoadMore();
         void showProgress();
-        void hideProgress();
         void showUserName(String fullName);
-        void sendToListBottom(int itemPosition);
+        void updatePokemonList(HashMap<Integer, Pokemon> pokemonList);
     }
 
     interface UserActions {
-        void setCurrentVisibleItem(int firstVisible);
         void loadPokemonPage();
         void loadNextPokemonPage();
         void logoutUser();

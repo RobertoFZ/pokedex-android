@@ -6,14 +6,14 @@ import com.roberto.pokedex.domain.User;
 
 import java.util.Objects;
 
+import static com.roberto.pokedex.data.APIConstants.PASSWORD;
+import static com.roberto.pokedex.data.APIConstants.USER_EMAIL;
+
 /**
  * Created by robertofz on 6/26/18.
  */
 
 public class LoginIteractor {
-
-    private static final String EMAIL = "test@gmail.com";
-    private static final String PASSWORD = "testemail";
 
     public interface OnLoginFinishedListener {
 
@@ -24,15 +24,17 @@ public class LoginIteractor {
 
     public void login(final String email, final String password, final OnLoginFinishedListener listener) {
         new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
-                if(!Objects.equals(email, EMAIL) || !Objects.equals(password, PASSWORD)){
+            @Override
+            public void run() {
+                if (!Objects.equals(email, USER_EMAIL) || !Objects.equals(password, PASSWORD)) {
                     listener.onCredentialsError();
+                } else {
+                    User user = new User();
+                    user.setEmail(USER_EMAIL);
+                    user.setFirstName("Test");
+                    user.setLastName("User");
+                    listener.onSuccess(user);
                 }
-                User user = new User();
-                user.setEmail(EMAIL);
-                user.setFirstName("Test");
-                user.setLastName("User");
-                listener.onSuccess(user);
             }
         }, 2000);
     }

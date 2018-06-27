@@ -19,6 +19,6 @@
         android:text="Nombre"
         android:id="@+id/name"
         android:textSize="21sp"
-        android:textColor="#f65034"/>
+        android:textColor="@color/colorListItem"/>
 
 </LinearLayout>

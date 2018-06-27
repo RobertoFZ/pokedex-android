@@ -7,8 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.Adapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -20,12 +19,12 @@ import com.roberto.pokedex.R;
 import com.roberto.pokedex.common.EndlessScrollListener;
 import com.roberto.pokedex.common.PokemonAdapter;
 import com.roberto.pokedex.common.iteractor.PokemonIteractor;
+import com.roberto.pokedex.data.PokemonManager;
 import com.roberto.pokedex.data.UserSessionManager;
 import com.roberto.pokedex.domain.Pokemon;
 import com.roberto.pokedex.presentation.Login.LoginActivity;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by robertofz on 6/26/18.
@@ -39,22 +38,26 @@ public class HomeActivity extends Activity implements HomeContract.View, View.On
     private Button tryAgainButton;
     private TextView userNameTextView;
     private FloatingActionButton floatingActionButton;
+    private PokemonAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        errorContainerLayour = findViewById(R.id.error_container);
-        progressBar = findViewById(R.id.progress);
-        pokemonListView = findViewById(R.id.pokemon_list);
+        errorContainerLayour = (LinearLayout) findViewById(R.id.error_container);
+        progressBar = (ProgressBar) findViewById(R.id.progress);
 
-        userNameTextView = findViewById(R.id.user_name);
+        userNameTextView = (TextView) findViewById(R.id.user_name);
 
-        tryAgainButton = findViewById(R.id.try_again_button);
+        tryAgainButton = (Button) findViewById(R.id.try_again_button);
 
-        floatingActionButton = findViewById(R.id.floating_action_button);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_action_button);
         floatingActionButton.setOnClickListener(this);
+
+        adapter = new PokemonAdapter(this, PokemonManager.getInstance().getPokemons());
+        pokemonListView = (ListView) findViewById(R.id.pokemon_list);
+        pokemonListView.setAdapter(adapter);
 
         presenter = new HomePresenter(this, new UserSessionManager(this), PokemonIteractor.getInstance());
         presenter.loadPokemonPage();
@@ -76,8 +79,7 @@ public class HomeActivity extends Activity implements HomeContract.View, View.On
 
     @Override
     public void updatePokemonList(HashMap<Integer, Pokemon> pokemonList) {
-        PokemonAdapter adapter = new PokemonAdapter(this, pokemonList);
-        pokemonListView.setAdapter(adapter);
+        adapter.updateList(pokemonList);
     }
 
     @Override
@@ -110,12 +112,6 @@ public class HomeActivity extends Activity implements HomeContract.View, View.On
         userNameTextView.setText(fullName);
     }
 
-    @Override
-    public void sendToListBottom(int itemPosition) {
-        Adapter adapter = pokemonListView.getAdapter();
-        pokemonListView.setSelection(itemPosition);
-    }
-
     private void createLogOutConfirm(View view) {
         Snackbar snackbar = Snackbar.make(view, getResources().getString(R.string.logout_confirm), Snackbar.LENGTH_LONG);
         snackbar.setAction(getResources().getString(R.string.yes), new View.OnClickListener() {
@@ -130,9 +126,7 @@ public class HomeActivity extends Activity implements HomeContract.View, View.On
     private void initListeners() {
         pokemonListView.setOnScrollListener(new EndlessScrollListener() {
             @Override
-            public boolean onLoadMore(int totalItemsCount) {
-                Log.d("Activity", "Page: " + totalItemsCount);
-                presenter.setCurrentVisibleItem(totalItemsCount);
+            public boolean onLoadMore() {
                 presenter.loadNextPokemonPage();
                 return true; // Always need to be true
             }

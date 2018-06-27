@@ -28,14 +28,9 @@ public class LoginPresenter implements LoginContract.UserActions, LoginIteractor
             loginView.hideLoginButton();
             loginView.hideCredentialsError();
         }
-        if(!isEmptyCredentials(email, password)){
+        if(!checkEmpyCredentials(email, password)){
             loginIteractor.login(email, password, this);
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        loginView = null;
     }
 
     @Override
@@ -57,19 +52,20 @@ public class LoginPresenter implements LoginContract.UserActions, LoginIteractor
         }
     }
 
-    private boolean isEmptyCredentials(String email, String password){
+    private boolean checkEmpyCredentials(String email, String password){
+        boolean emptyCredentials = false;
         if (TextUtils.isEmpty(email)) {
             loginView.setEmailError();
             loginView.hideProgress();
             loginView.showLoginButton();
-            return true;
+            emptyCredentials = true;
         }
         if (TextUtils.isEmpty(password)) {
             loginView.setPasswordError();
             loginView.hideProgress();
             loginView.showLoginButton();
-            return true;
+            emptyCredentials = true;
         }
-        return false;
+        return emptyCredentials;
     }
 }

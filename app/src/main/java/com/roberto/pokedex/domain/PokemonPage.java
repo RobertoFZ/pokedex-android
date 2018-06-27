@@ -15,15 +15,28 @@ import static com.roberto.pokedex.data.APIConstants.RESULTS;
 
 public class PokemonPage {
     @SerializedName(COUNT)
-    public int count;
+    private int count;
     @SerializedName(PREVIOUS)
-    public String previous;
+    private String previous;
     @SerializedName(RESULTS)
-    public List<Pokemon> results;
+    private List<Pokemon> results;
     @SerializedName(NEXT)
-    public String next;
+    private String next;
+
+    public int getCount(){
+        return count;
+    }
+
+    public String getNext(){
+        return next;
+    }
+
+    public String getPrevious(){
+        return previous;
+    }
 
     public List<Pokemon> getList(){
         return results;
     }
+
 }

@@ -12,11 +12,11 @@ import static com.roberto.pokedex.data.APIConstants.URL;
 
 public class Pokemon {
     @SerializedName(ID)
-    public int id;
+    private int id;
     @SerializedName(NAME)
-    public String name;
+    private String name;
     @SerializedName(URL)
-    public String url;
+    private String url;
 
     public String getName(){
         return name;

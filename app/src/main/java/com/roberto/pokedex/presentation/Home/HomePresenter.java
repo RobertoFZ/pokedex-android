@@ -8,6 +8,8 @@ import com.roberto.pokedex.data.PokemonManager;
 import com.roberto.pokedex.data.UserSessionManager;
 import com.roberto.pokedex.domain.PokemonPage;
 
+import static com.roberto.pokedex.data.APIConstants.LIST_LIMIT;
+
 /**
  * Created by robertofz on 6/26/18.
  */
@@ -17,8 +19,6 @@ public class HomePresenter implements HomeContract.UserActions, SingleItemCallba
     private HomeContract.View homeView;
     private UserSessionManager userSessionManager;
     private PokemonIteractor pokemonInteractor;
-    private int currentVisibleItem = 0;
-    private int limit = 20;
 
     public HomePresenter(HomeContract.View homeView, UserSessionManager userSessionManager, PokemonIteractor pokemonInteractor) {
         this.homeView = homeView;
@@ -47,26 +47,24 @@ public class HomePresenter implements HomeContract.UserActions, SingleItemCallba
         pokemonManager.updatePokemonsList(pokemonPage);
 
         homeView.updatePokemonList(pokemonManager.getPokemons());
-        homeView.sendToListBottom(currentVisibleItem);
         homeView.hideProgress();
-    }
-
-    @Override
-    public void setCurrentVisibleItem(int currentVisibleItem) {
-        this.currentVisibleItem = currentVisibleItem;
     }
 
     @Override
     public void loadPokemonPage() {
         homeView.hideError();
         homeView.showProgress();
-        pokemonInteractor.getPokemonPage(limit, pokemonManager.getOffset(), this);
+        pokemonInteractor.getPokemonPage(LIST_LIMIT, pokemonManager.getOffset(), this);
     }
 
     @Override
     public void loadNextPokemonPage() {
-        homeView.showLoadMore();
-        pokemonInteractor.getPokemonPage(limit, pokemonManager.getOffset(), this);
+        Integer count = pokemonManager.getCount();
+        Integer currentListSize = pokemonManager.getPokemons().size();
+        if (count > currentListSize) {
+            homeView.showLoadMore();
+            pokemonInteractor.getPokemonPage(LIST_LIMIT, pokemonManager.getOffset(), this);
+        }
     }
 
     @Override
@@ -78,7 +76,7 @@ public class HomePresenter implements HomeContract.UserActions, SingleItemCallba
     private void showUserName() {
         String firstName = userSessionManager.getCurrentUser().getFirstName();
         String lastName = userSessionManager.getCurrentUser().getLastName();
-        String fullName = "Hi " + firstName + " " + lastName;
+        String fullName = firstName + " " + lastName;
         homeView.showUserName(fullName);
     }
 }
