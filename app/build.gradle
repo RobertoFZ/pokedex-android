@@ -77,7 +77,6 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.converterGson"
     implementation "com.google.code.gson:gson:$rootProject.gson"
-    implementation "com.squareup.picasso:picasso:$rootProject.picasso"
 }
 
 configurations.all {

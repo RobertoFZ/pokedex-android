@@ -46,8 +46,6 @@ ext {
     retrofit = '2.0.0'
     gson = '2.6.1'
     converterGson = '2.0.0'
-    picasso = '2.5.2'
-    PlayServices = '10.2.0'
 
     // App dependencies
     constraintLayoutVersion = '1.1.2'

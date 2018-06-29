@@ -11,7 +11,7 @@
     <!-- login screen end -->
 
     <!-- home screen start -->
-    <string name="wellcome">Wellcome</string>
+    <string name="welcome">Welcome</string>
     <string name="logout_confirm">Are you sure you want to log out?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
